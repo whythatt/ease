@@ -69,7 +69,7 @@ def fetch_data(image_url, headers=headers, params=params):
     with open("result.json", "w", encoding="utf-8") as file:
         json.dump(goods, file, ensure_ascii=False, indent=4)
 
-    print(f'Data from {params['p']} pages were collected 🫡')
+    print(f"Data from {params['p']} pages were collected 🫡")
 
 
 fetch_data(
