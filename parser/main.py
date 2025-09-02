@@ -37,7 +37,7 @@ def fetch_data(image_url, headers=headers, params=params):
     params["url"] = image_url
 
     goods = []
-    while int(params["p"]) <= 5:
+    while int(params["p"]) <= 1:
         response = requests.get(
             "https://ya.ru/images/api/v1/cbir/market",
             params=params,
@@ -54,9 +54,9 @@ def fetch_data(image_url, headers=headers, params=params):
                             "image_url": d["Url"],
                             "title": d["Title"],
                             "price": d["Price"],
-                            "shopUrl": d["ShopUrlRaw"],
-                            "shopName": d["ShopName"],
-                            "shopDomain": d["ShopDomain"],
+                            "shop_url": d["ShopUrlRaw"],
+                            "shop_name": d["ShopName"],
+                            "shop_domain": d["ShopDomain"],
                         }
                     )
             else:
@@ -66,12 +66,14 @@ def fetch_data(image_url, headers=headers, params=params):
 
         params["p"] = str(int(params["p"]) + 1)
 
-    with open("result.json", "w", encoding="utf-8") as file:
-        json.dump(goods, file, ensure_ascii=False, indent=4)
+    return {"products": goods}
 
-    print(f"Data from {params['p']} pages were collected 🫡")
+    # with open("result.json", "w", encoding="utf-8") as file:
+    #     json.dump(goods, file, ensure_ascii=False, indent=4)
+
+    # print(f"Data from {params['p']} pages were collected 🫡")
 
 
-fetch_data(
-    image_url="https://i.pinimg.com/1200x/75/ba/20/75ba203b197fe2d881ac19e628bf9bb7.jpg"
-)
+# fetch_data(
+#     image_url="https://i.pinimg.com/1200x/75/ba/20/75ba203b197fe2d881ac19e628bf9bb7.jpg"
+# )
