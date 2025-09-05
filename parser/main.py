@@ -67,13 +67,3 @@ def fetch_data(image_url, headers=headers, params=params):
         params["p"] = str(int(params["p"]) + 1)
 
     return {"products": goods}
-
-    # with open("result.json", "w", encoding="utf-8") as file:
-    #     json.dump(goods, file, ensure_ascii=False, indent=4)
-
-    # print(f"Data from {params['p']} pages were collected 🫡")
-
-
-# fetch_data(
-#     image_url="https://i.pinimg.com/1200x/75/ba/20/75ba203b197fe2d881ac19e628bf9bb7.jpg"
-# )

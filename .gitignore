@@ -1,6 +1,11 @@
 # Мои файлы
 parser/result.json
 
+# Python cache
+__pycache__/
+*.py[cod]
+*$py.class
+
 # Логи и временные файлы
 *.log
 *.tmp
