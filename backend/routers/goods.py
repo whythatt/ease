@@ -10,5 +10,9 @@ router = APIRouter(prefix="/goods", tags=["Goods APIs"])
 
 
 @router.get("/", response_model=GoodsResponseSchema)
-def parse_goods(image_url: str) -> GoodsResponseSchema:
-    return get_cached_goods(image_url)
+def parse_goods(
+    image_url: str,
+    page: int = Query(1, ge=1),
+    limit: int = Query(10, ge=1, le=100)
+) -> GoodsResponseSchema:
+    return get_cached_goods(image_url, page, limit)

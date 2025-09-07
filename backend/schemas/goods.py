@@ -13,3 +13,8 @@ class GoodsSchema(BaseModel):
 
 class GoodsResponseSchema(BaseModel):
     products: List[GoodsSchema]
+    page: int | None
+    limit: int | None
+    total: int | None
+    pages: int | None
+    has_more: bool | None
