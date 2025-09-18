@@ -1,47 +1,35 @@
 <script setup>
-import HelloWorld from './components/HelloWorld.vue'
-import TheWelcome from './components/TheWelcome.vue'
 </script>
 
 <template>
-  <header>
-    <img alt="Vue logo" class="logo" src="./assets/logo.svg" width="125" height="125" />
-
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
-    </div>
-  </header>
-
-  <main>
-    <TheWelcome />
-  </main>
+    <RouterView />
 </template>
 
-<style scoped>
-header {
-  line-height: 1.5;
+<style>
+:root {
+    --bg: #eef1f3;
+    --card-radius: 18px;
+    --gap: 5px;
 }
 
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
+* {
+    box-sizing: border-box;
 }
 
-@media (min-width: 1024px) {
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
-  }
+html,
+body {
+    height: 100%;
+    margin: 0;
+    font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto,
+        "Helvetica Neue", Arial;
+    color: #222;
+}
 
-  .logo {
-    margin: 0 2rem 0 0;
-  }
-
-  header .wrapper {
+body {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
     display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  }
+    align-items: flex-start;
+    justify-content: center;
 }
 </style>
