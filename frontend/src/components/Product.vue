@@ -6,16 +6,18 @@ const props = defineProps({
     shop_domain: String
 })
 
-const openShopUrl = () => {
+const openShopUrl = (shop_url) => {
     window.open(shop_url, '_blank', 'noopener,noreferrer')
 }
 </script>
 
 <template>
-    <div class="card" @click="openShopUrl">
-        <img :src="image_url" alt="Product image" />
+    <div class="card" @click="openShopUrl(shop_url)">
+        <div class="image-wrapper">
+            <img :src="image_url" alt="Product image" class="image" />
+        </div>
         <div class="meta">
-            <div class="price">{{ price }}</div>
+            <div class="price">{{ price }} ₽</div>
             <div class="source">{{ shop_domain }}</div>
         </div>
     </div>
@@ -26,50 +28,63 @@ const openShopUrl = () => {
     border-radius: 18px;
     overflow: hidden;
     background: white;
-    display: flex;
-    flex-direction: column;
-    /* justify-content: flex-end; */
     box-shadow: 0 6px 18px rgba(10, 10, 10, 0.06);
+    position: relative;
 }
 
-img {
+.image-wrapper {
+    position: relative;
     width: 100%;
     height: auto;
+    max-height: 200px;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+}
+
+.image-wrapper .image {
+    width: 100%;
+    height: auto;
+    margin: auto 0px;
+    max-height: 200px;
+    object-fit: contain;
+    object-position: center;
     display: block;
 }
 
-.meta {
-    position: relative;
+.card .meta {
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
     z-index: 2;
-    padding: 12px 14px;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 6px;
+    background: rgba(0, 0, 0, 0.4);
+    color: white;
+    padding: 5px 5px;
+    border-radius: 8px;
+    max-width: 90%;
 }
 
 .price {
-    background: linear-gradient(90deg, rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0.55));
     color: white;
-    padding: 6px 10px;
     border-radius: 10px;
     font-weight: 600;
-    font-size: 15px;
+    font-size: 14px;
 }
 
 .source {
-    font-size: 14px;
+    font-size: 13px;
     color: white;
 }
 
 
 @media (max-width: 420px) {
     .source {
-        font-size: 12px;
+        font-size: 10px;
     }
 
     .price {
-        font-size: 13px;
+        font-size: 11px;
     }
 }
 </style>
