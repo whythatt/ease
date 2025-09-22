@@ -6,7 +6,7 @@ const emit = defineEmits(['goodsData'])
 const image_url = defineModel('image_url')
 const fetchGoods = async () => {
     try {
-        const data = await axios.get('http://127.0.0.1:8000/goods/', {
+        const data = await axios.get('https://ease-vojh.onrender.com/goods/', {
             params: {
                 image_url: image_url.value
             }
