@@ -1,6 +1,4 @@
 from fastapi import APIRouter, Query
-from fastapi import APIRouter, Depends
-import redis
 
 from schemas.goods import GoodsResponseSchema
 from cruds.goods import get_cached_goods

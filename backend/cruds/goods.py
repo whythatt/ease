@@ -1,4 +1,6 @@
+import os
 import redis
+from dotenv import load_dotenv
 
 import sys
 import math
@@ -16,7 +18,10 @@ sys.path.insert(0, str(python_path))
 from parser.main import fetch_data
 
 
-redis_client = redis.Redis()
+load_dotenv()
+
+redis_url = os.getenv("REDIS_URL")
+redis_client = redis.Redis.from_url(redis_url)
 
 
 def get_cached_goods(image_url: str, page: int, limit: int) -> GoodsResponseSchema:
