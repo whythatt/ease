@@ -9,7 +9,7 @@ export function useTelegram() {
   // Инициализация
   const init = () => {
     // Расширяем на весь экран
-    tg.expand();
+    // tg.expand();
 
     // Получаем данные пользователя
     if (tg.initDataUnsafe?.user) {
