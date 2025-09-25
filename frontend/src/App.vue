@@ -19,17 +19,9 @@
 html,
 body {
     height: 100%;
-    margin: 20px 10px;
     font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto,
         "Helvetica Neue", Arial;
-    color: #222;
-}
-
-body {
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    display: flex;
-    align-items: flex-start;
-    justify-content: center;
+    color: var(--tg-theme-text-color);
+    background: var(--tg-theme-bg-color);
 }
 </style>

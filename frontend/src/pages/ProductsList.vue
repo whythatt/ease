@@ -24,7 +24,8 @@ const handleGoodsData = (data) => {
 <style>
 .frame {
     width: 100%;
-    background: rgba(255, 255, 255, 0.7);
+    background: var(--tg-theme-bg-color);
+    margin: 20px 10px;
 }
 
 .grid {
@@ -40,6 +41,7 @@ const handleGoodsData = (data) => {
         gap: var(--gap);
     }
 }
+
 @media (min-width: 601px) {
     .grid {
         display: grid;
@@ -47,6 +49,7 @@ const handleGoodsData = (data) => {
         gap: var(--gap);
     }
 }
+
 @media (min-width: 1131px) {
     .grid {
         display: grid;

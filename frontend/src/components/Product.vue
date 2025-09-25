@@ -28,7 +28,7 @@ const openShopUrl = (shop_url) => {
     cursor: pointer;
     border-radius: 18px;
     overflow: hidden;
-    background: white;
+    background: var(--tg-theme-bg-color);
     box-shadow: 0 6px 18px rgba(10, 10, 10, 0.06);
     position: relative;
 }
@@ -41,7 +41,7 @@ const openShopUrl = (shop_url) => {
     display: flex;
     justify-content: center;
     align-items: center;
-    background: #f5f5f5;
+    background: var(--tg-theme-bg-color);
 }
 
 .image-wrapper .image {
@@ -58,15 +58,16 @@ const openShopUrl = (shop_url) => {
     bottom: 10px;
     left: 10px;
     z-index: 2;
-    background: rgba(0, 0, 0, 0.4);
-    color: white;
+    background: var(--tg-theme-bg-color);
+    opacity: 0.4;
+    color: var(--tg-theme-text-color);
     padding: 5px 5px;
     border-radius: 8px;
     max-width: 90%;
 }
 
 .price {
-    color: white;
+    color: var(--tg-theme-text-color);
     border-radius: 10px;
     font-weight: 600;
     font-size: 11px;
@@ -74,7 +75,7 @@ const openShopUrl = (shop_url) => {
 
 .source {
     font-size: 10px;
-    color: white;
+    color: var(--tg-theme-text-color);
 }
 
 

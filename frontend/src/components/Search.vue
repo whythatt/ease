@@ -34,14 +34,12 @@ const fetchGoods = async () => {
 .search {
     display: flex;
     align-items: center;
-    background: linear-gradient(180deg,
-            rgba(255, 255, 255, 0.9),
-            rgba(250, 250, 250, 0.9));
+    background: var(--tg-theme-bg-color);
     border-radius: 999px;
     padding: 12px 16px;
     gap: 12px;
-    margin-bottom: 16px;
-    box-shadow: 0 2px 8px rgba(10, 10, 10, 0.06) inset;
+    margin-bottom: 13px;
+    box-shadow: 0 2px 8px var(--tg-theme-shadow-color, rgba(10, 10, 10, 0.06)) inset;
 }
 
 .search input {
@@ -50,7 +48,7 @@ const fetchGoods = async () => {
     background: transparent;
     font-size: 15px;
     flex: 1;
-    color: #333;
+    color: var(--tg-theme-text-color);
 }
 
 svg {
