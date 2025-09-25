@@ -23,7 +23,7 @@ const handleGoodsData = (data) => {
 
 <style>
 .frame {
-    width: 380px;
+    width: 100%;
     background: rgba(255, 255, 255, 0.7);
 }
 
@@ -33,10 +33,25 @@ const handleGoodsData = (data) => {
     gap: var(--gap);
 }
 
-@media (max-width: 420px) {
-    .frame {
-        width: 92vw;
-        padding: 14px;
+@media (min-width: 427px) {
+    .grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: var(--gap);
+    }
+}
+@media (min-width: 601px) {
+    .grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: var(--gap);
+    }
+}
+@media (min-width: 1131px) {
+    .grid {
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+        gap: var(--gap);
     }
 }
 </style>

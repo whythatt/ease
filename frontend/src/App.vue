@@ -19,7 +19,7 @@
 html,
 body {
     height: 100%;
-    margin: 0;
+    margin: 20px 10px;
     font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto,
         "Helvetica Neue", Arial;
     color: #222;

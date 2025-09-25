@@ -25,6 +25,7 @@ const openShopUrl = (shop_url) => {
 
 <style>
 .card {
+    cursor: pointer;
     border-radius: 18px;
     overflow: hidden;
     background: white;
@@ -35,19 +36,18 @@ const openShopUrl = (shop_url) => {
 .image-wrapper {
     position: relative;
     width: 100%;
-    height: auto;
-    max-height: 200px;
+    max-height: 180px;
     overflow: hidden;
     display: flex;
     justify-content: center;
-    align-items: flex-end;
+    align-items: center;
+    background: #f5f5f5;
 }
 
 .image-wrapper .image {
     width: 100%;
     height: auto;
-    margin: auto 0px;
-    max-height: 200px;
+    max-height: 100%;
     object-fit: contain;
     object-position: center;
     display: block;
@@ -69,22 +69,108 @@ const openShopUrl = (shop_url) => {
     color: white;
     border-radius: 10px;
     font-weight: 600;
-    font-size: 14px;
+    font-size: 11px;
 }
 
 .source {
-    font-size: 13px;
+    font-size: 10px;
     color: white;
 }
 
 
-@media (max-width: 420px) {
+@media (min-width: 374px) {
+    .image-wrapper {
+        max-height: 220px;
+    }
+
     .source {
         font-size: 10px;
     }
 
     .price {
         font-size: 11px;
+    }
+}
+
+@media (min-width: 427px) {
+    .image-wrapper {
+        max-height: 150px;
+    }
+
+    .source {
+        font-size: 10px;
+    }
+
+    .price {
+        font-size: 11px;
+    }
+}
+
+@media (min-width: 501px) {
+    .image-wrapper {
+        max-height: 200px;
+    }
+}
+
+@media (min-width: 601px) {
+    .image-wrapper {
+        max-height: 180px;
+    }
+
+    .source {
+        font-size: 10px;
+    }
+
+    .price {
+        font-size: 11px;
+    }
+}
+
+@media (min-width: 701px) {
+    .image-wrapper {
+        max-height: 210px;
+    }
+}
+
+@media (min-width: 831px) {
+    .image-wrapper {
+        max-height: 255px;
+    }
+
+    .source {
+        font-size: 12px;
+    }
+
+    .price {
+        font-size: 13px;
+    }
+}
+
+@media (min-width: 911px) {
+    .image-wrapper {
+        max-height: 285px;
+    }
+
+    .source {
+        font-size: 15px;
+    }
+
+    .price {
+        font-size: 16px;
+    }
+}
+
+@media (min-width: 1385px) {
+    .image-wrapper {
+        max-height: 350px;
+    }
+
+    .source {
+        font-size: 18px;
+    }
+
+    .price {
+        font-size: 19px;
     }
 }
 </style>

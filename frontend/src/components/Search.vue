@@ -26,7 +26,7 @@ const fetchGoods = async () => {
             <circle cx="11" cy="11" r="6" stroke="#666" stroke-width="1.6" stroke-linecap="round"
                 stroke-linejoin="round" />
         </svg>
-        <input v-model="image_url" id="q" placeholder="link to the image" />
+        <input @keyup.enter="fetchGoods" v-model="image_url" id="q" placeholder="link to the image" />
     </div>
 </template>
 
@@ -51,5 +51,9 @@ const fetchGoods = async () => {
     font-size: 15px;
     flex: 1;
     color: #333;
+}
+
+svg {
+    cursor: pointer;
 }
 </style>
