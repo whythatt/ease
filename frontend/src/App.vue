@@ -23,5 +23,7 @@ body {
         "Helvetica Neue", Arial;
     color: var(--tg-theme-text-color);
     background: var(--tg-theme-bg-color);
+    padding-top: calc(40px + env(safe-area-inset-top));
+    padding-bottom: calc(12px + env(safe-area-inset-bottom));
 }
 </style>

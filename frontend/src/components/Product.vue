@@ -59,7 +59,7 @@ const openShopUrl = (shop_url) => {
     left: 10px;
     z-index: 2;
     background: var(--tg-theme-bg-color);
-    opacity: 0.4;
+    opacity: 0.8;
     color: var(--tg-theme-text-color);
     padding: 5px 5px;
     border-radius: 8px;

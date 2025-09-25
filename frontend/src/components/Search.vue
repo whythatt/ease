@@ -34,19 +34,23 @@ const fetchGoods = async () => {
 .search {
     display: flex;
     align-items: center;
-    background: var(--tg-theme-bg-color);
+    /* background: var(--tg-theme-bg-color); */
+    background: #121a28;
     border-radius: 999px;
-    padding: 12px 16px;
     gap: 12px;
     margin-bottom: 13px;
-    box-shadow: 0 2px 8px var(--tg-theme-shadow-color, rgba(10, 10, 10, 0.06)) inset;
+    /* box-shadow: var(--tg-theme-shadow-color, rgba(10, 10, 10, 0.14)); */
+    padding-top: calc(22px + env(safe-area-inset-top));
+    padding-bottom: calc(22px + env(safe-area-inset-bottom));
+    padding-left: 18px;
+    padding-right: 18px;
 }
 
 .search input {
     border: 0;
     outline: 0;
     background: transparent;
-    font-size: 15px;
+    font-size: 17px;
     flex: 1;
     color: var(--tg-theme-text-color);
 }

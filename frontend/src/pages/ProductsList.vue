@@ -23,7 +23,6 @@ const handleGoodsData = (data) => {
 
 <style>
 .frame {
-    width: 100%;
     background: var(--tg-theme-bg-color);
     margin: 20px 10px;
 }
