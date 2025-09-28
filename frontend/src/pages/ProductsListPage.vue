@@ -69,12 +69,17 @@ onBeforeUnmount(() => {
     <div class="frame">
         <ProductsList :products="goods" />
     </div>
+    <div v-if="loading" class="loading">Загрузка...</div>
     <div ref="bottom" style="height: 1px;"></div>
-    <div v-if="loading">Загрузка...</div>
 </template>
 
 <style>
 .frame {
     margin: 20px 10px;
+}
+
+.loading {
+    margin: 10px auto;
+    width: fit-content
 }
 </style>
