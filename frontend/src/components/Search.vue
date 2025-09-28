@@ -1,35 +1,20 @@
 <script setup>
-import axios from 'axios'
 import { ref } from 'vue'
 
-const emit = defineEmits(['goodsData'])
+const emit = defineEmits(['search'])
 
-const image_url = defineModel('image_url')
-const searchInput = ref(null)
-const fetchGoods = async () => {
-    try {
-        const data = await axios.get('https://ease-vojh.onrender.com/goods/', {
-            params: {
-                image_url: image_url.value
-            }
-        })
-        emit('goodsData', data.data)
-        if (searchInput.value) searchInput.value.blur()
-    } catch (err) {
-        console.log(err)
-    }
-}
+const input = ref('')
 
-const onEnter = (event) => {
-    event.preventDefault()
-    fetchGoods()
+const onEnter = (e) => {
+    e.preventDefault()
+    emit('search', input.value)
 }
 </script>
 
 <template>
     <div class="search" role="search">
-        <input ref="searchInput" v-model="image_url" @keydown.enter="onEnter" id="q" placeholder="link to the image" />
-        <svg @click="fetchGoods" width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden>
+        <input v-model="input" @keydown.enter="onEnter" id="q" placeholder="link to the image" />
+        <svg @click="onEnter" width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden>
             <path d="M21 21l-4.35-4.35" stroke="#666" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
             <circle cx="11" cy="11" r="6" stroke="#666" stroke-width="2" stroke-linecap="round"
                 stroke-linejoin="round" />

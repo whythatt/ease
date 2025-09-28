@@ -37,7 +37,8 @@ def fetch_data(image_url, headers=headers, params=params):
     params["url"] = image_url
 
     goods = []
-    while int(params["p"]) < 1:
+    while int(params["p"]) < 2:
+    # while True:
         response = requests.get(
             "https://ya.ru/images/api/v1/cbir/market",
             params=params,
@@ -69,4 +70,4 @@ def fetch_data(image_url, headers=headers, params=params):
     return {"products": goods}
 
 
-# fetch_data("https://i.pinimg.com/1200x/26/75/c5/2675c5fc9bd015539b04c14809efc0e9.jpg")
+# print(fetch_data("https://i.pinimg.com/736x/1e/79/f1/1e79f16600a889e074e819971399aa12.jpg"))
