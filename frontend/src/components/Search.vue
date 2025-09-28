@@ -3,17 +3,19 @@ import { ref } from 'vue'
 
 const emit = defineEmits(['search'])
 
-const input = ref('')
+const inputValue = ref('')
+const input = ref(null)
 
 const onEnter = (e) => {
     e.preventDefault()
-    emit('search', input.value)
+    emit('search', inputValue.value)
+    if (input.value) input.value.blur()  // снимаем фокус, закрывая клавиатуру
 }
 </script>
 
 <template>
     <div class="search" role="search">
-        <input v-model="input" @keydown.enter="onEnter" id="q" placeholder="link to the image" />
+        <input ref="input" v-model="inputValue" @keydown.enter="onEnter" id="q" placeholder="link to the image" />
         <svg @click="onEnter" width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden>
             <path d="M21 21l-4.35-4.35" stroke="#666" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
             <circle cx="11" cy="11" r="6" stroke="#666" stroke-width="2" stroke-linecap="round"
