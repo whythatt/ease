@@ -1,73 +1,76 @@
-import base64
 import json
 import requests
+from headers import url_headers, image_headers
 
 
-headers = {
-    "accept": "*/*",
-    "accept-language": "en-GB,en;q=0.9",
-    "content-type": "application/json",
-    "priority": "u=1, i",
-    "referer": "https://ya.ru/images/search?rpt=imageview&url={0}&cbir_id=1607854%2FRHa06BbX0xLdOXG84NcABw9773&cbir_id=1607854%2FRHa06BbX0xLdOXG84NcABw9773&cbird=188&cbir_page=products",
-    "sec-ch-ua": '"Not;A=Brand";v="99", "Brave";v="139", "Chromium";v="139"',
-    "sec-ch-ua-arch": '"arm"',
-    "sec-ch-ua-bitness": '"64"',
-    "sec-ch-ua-full-version-list": '"Not;A=Brand";v="99.0.0.0", "Brave";v="139.0.0.0", "Chromium";v="139.0.0.0"',
-    "sec-ch-ua-mobile": "?0",
-    "sec-ch-ua-model": '""',
-    "sec-ch-ua-platform": '"macOS"',
-    "sec-ch-ua-platform-version": '"13.5.0"',
-    "sec-ch-ua-wow64": "?0",
-    "sec-fetch-dest": "empty",
-    "sec-fetch-mode": "cors",
-    "sec-fetch-site": "same-origin",
-    "sec-gpc": "1",
-    "user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36",
-}
+class Parser:
+    @classmethod
+    def fetch_data_by_url(self, image_url: str):
+        params = {
+            "url": "",
+            "p": "0",
+            "text": "",
+        }
+        params["url"] = image_url
 
-params = {
-    "url": "",
-    "p": "0",
-    "text": "",
-}
+        goods = []
 
+        while int(params["p"]) < 2:
+            # while True:
+            response = requests.get(
+                "https://ya.ru/images/api/v1/cbir/market",
+                params=params,
+                headers=url_headers,
+            )
 
-def fetch_data(image_url, headers=headers, params=params):
-    params = params.copy()
-    params["url"] = image_url
-
-    goods = []
-    while int(params["p"]) < 2:
-    # while True:
-        response = requests.get(
-            "https://ya.ru/images/api/v1/cbir/market",
-            params=params,
-            headers=headers,
-        )
-
-        if response.status_code == 200:
-            data = response.json()["data"]["images"]
-            if data:
-                for d in data:
-                    d = d["market_info"]
-                    goods.append(
-                        {
-                            "image_url": d["Url"],
-                            "title": d["Title"],
-                            "price": d["Price"],
-                            "shop_url": d["ShopUrlRaw"],
-                            "shop_name": d["ShopName"],
-                            "shop_domain": d["ShopDomain"],
-                        }
-                    )
-            else:
+            if response.status_code != 200:
+                response.raise_for_status()
+            try:
+                data = response.json()["data"]["images"]
+            except (ValueError, AttributeError):
                 break
+
+            if not data:
+                break
+
+            for item in data:
+                market_info = item.get("market_info", {})
+                goods.append(
+                    {
+                        "image_url": market_info["Url"],
+                        "title": market_info["Title"],
+                        "price": market_info["Price"],
+                        "shop_url": market_info["ShopUrlRaw"],
+                        "shop_name": market_info["ShopName"],
+                        "shop_domain": market_info["ShopDomain"],
+                    }
+                )
+
+            params["p"] = str(int(params["p"]) + 1)
+
+        return {"products": goods}
+
+    @classmethod
+    def fetch_data_by_image(self, binary_image: bytes):
+        url = "https://ya.ru/images-apphost/image-download"
+        response = requests.post(url, headers=image_headers, data=binary_image)
+
+        if response.status_code != 200:
+            response.raise_for_status()
+
+        try:
+            image_url = response.json()["url"]
+        except (ValueError, AttributeError):
+            return "Invalid response format"
+
+        if image_url:
+            return self.fetch_data_by_url(image_url)
         else:
-            return response.raise_for_status()
-
-        params["p"] = str(int(params["p"]) + 1)
-
-    return {"products": goods}
+            return "Goods were not found according to this image"
 
 
-# print(fetch_data("https://i.pinimg.com/736x/1e/79/f1/1e79f16600a889e074e819971399aa12.jpg"))
+# with open("socks.jpg", "rb") as f:
+#     data = f.read()
+
+# socks = Parser().fetch_data_by_image(data)
+# print(socks)
