@@ -1,6 +1,9 @@
 # Мои файлы
 parser/result.json
-frontend/.firebase
+frontend/.firebase/
+frontend/.firebaserc
+frontend/.firebase.json
+
 
 # Python cache
 __pycache__/
