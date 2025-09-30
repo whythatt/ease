@@ -12,25 +12,41 @@ const noMore = ref(false)
 const bottom = ref(null)
 const canLoadMore = ref(false)
 const imageUrl = ref('')
+const imageFile = ref('')
 
-const onSearch = (newImageUrl) => {
-    imageUrl.value = newImageUrl
+const onSearch = (payload) => {
+    if (typeof payload === 'string') {
+        // Поиск по URL
+        imageUrl.value = payload
+        imageFile.value = null
+    } else {
+        // Поиск по файлу
+        imageFile.value = payload
+        imageUrl.value = ''
+    }
     goods.value = []
     page.value = 1
     noMore.value = false
-    canLoadMore.value = true // разрешаем подгрузку по скроллу
+    canLoadMore.value = true
     fetchGoods()
 }
 
 const fetchGoods = async () => {
     if (loading.value || noMore.value) return
-
     loading.value = true
     try {
-        const { data } = await axios.get('https://ease-vojh.onrender.com/goods/', {
+        let response
+        if (imageFile.value && !imageUrl.value) {
+            const formData = new FormData()
+            formData.append('file', imageFile.value)
+            console.log('делаю это опять')
+            response = await axios.post('http://localhost:10000/goods/', formData)
+            imageUrl.value = response.data.image_url
+        }
+        response = await axios.get('http://localhost:10000/goods/', {
             params: { image_url: imageUrl.value, page: page.value, limit }
         })
-        console.log(data)
+        const data = response.data
         if (data.products.length < limit) noMore.value = true
         goods.value.push(...data.products)
         page.value++

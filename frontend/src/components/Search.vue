@@ -5,17 +5,34 @@ const emit = defineEmits(['search'])
 
 const inputValue = ref('')
 const input = ref(null)
+const file = ref(null)
 
 const onEnter = (e) => {
     e.preventDefault()
-    emit('search', inputValue.value)
-    if (input.value) input.value.blur()  // снимаем фокус, закрывая клавиатуру
+    if (file.value) {
+        // Отправляем файл
+        emit('search', file.value)
+    } else {
+        // Отправляем URL
+        emit('search', inputValue.value)
+    }
+    if (input.value) input.value.blur()
+    file.value = null
+}
+
+const onFileChange = (e) => {
+    const files = e.target.files
+    if (files.length > 0) {
+        file.value = files[0]
+        inputValue.value = '' // чистим input URL
+    }
 }
 </script>
 
 <template>
     <div class="search" role="search">
         <input ref="input" v-model="inputValue" @keydown.enter="onEnter" id="q" placeholder="link to the image" />
+        <input type="file" @change="onFileChange">
         <svg @click="onEnter" width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden>
             <path d="M21 21l-4.35-4.35" stroke="#666" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
             <circle cx="11" cy="11" r="6" stroke="#666" stroke-width="2" stroke-linecap="round"

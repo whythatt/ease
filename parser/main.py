@@ -1,6 +1,6 @@
 import json
 import requests
-from headers import url_headers, image_headers
+from .headers import url_headers, image_headers
 
 
 class Parser:
@@ -28,10 +28,10 @@ class Parser:
             try:
                 data = response.json()["data"]["images"]
             except (ValueError, AttributeError):
-                break
+                return "Invalid response format"
 
             if not data:
-                break
+                return "Goods were not found according to this link"
 
             for item in data:
                 market_info = item.get("market_info", {})
@@ -51,7 +51,7 @@ class Parser:
         return {"products": goods}
 
     @classmethod
-    def fetch_data_by_image(self, binary_image: bytes):
+    def fetch_image_url_from_file(self, binary_image: bytes):
         url = "https://ya.ru/images-apphost/image-download"
         response = requests.post(url, headers=image_headers, data=binary_image)
 
@@ -60,13 +60,9 @@ class Parser:
 
         try:
             image_url = response.json()["url"]
+            return image_url
         except (ValueError, AttributeError):
             return "Invalid response format"
-
-        if image_url:
-            return self.fetch_data_by_url(image_url)
-        else:
-            return "Goods were not found according to this image"
 
 
 # with open("socks.jpg", "rb") as f:

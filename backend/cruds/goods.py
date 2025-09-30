@@ -8,30 +8,27 @@ import json
 import hashlib
 from pathlib import Path
 
-from schemas.goods import GoodsResponseSchema
-
-# Добавляем путь к папке python в sys.path
-python_path = Path(__file__).parent.parent.parent  # /Users/niktar/python
-sys.path.insert(0, str(python_path))
-
-# Теперь импортируем абсолютным путем
-from parser.main import fetch_data
+from backend.schemas.goods import GoodsResponseSchema
+from parser.main import Parser
 
 
-load_dotenv()
+# load_dotenv()
 
-redis_url = os.getenv("REDIS_URL")
-redis_client = redis.Redis.from_url(redis_url)
+# redis_url = os.getenv("REDIS_URL")
+# redis_client = redis.Redis.from_url(redis_url)
+redis_client = redis.Redis()
 
 
-def get_cached_goods(image_url: str, page: int, limit: int) -> GoodsResponseSchema:
+def get_cached_goods_by_url(
+    image_url: str, page: int, limit: int
+) -> GoodsResponseSchema:
     encode_url = hashlib.md5(image_url.encode()).hexdigest()[
         :12
     ]  # Кодирую url, чтобы он был короче
     cached_goods = redis_client.get(f"products:{encode_url}")
 
     if not cached_goods:
-        cached_goods = fetch_data(image_url)
+        cached_goods = Parser.fetch_data_by_url(image_url)
         redis_client.setex(f"products:{encode_url}", 300, json.dumps(cached_goods))
         goods_list = cached_goods["products"]
     else:
@@ -50,3 +47,8 @@ def get_cached_goods(image_url: str, page: int, limit: int) -> GoodsResponseSche
         "pages": math.ceil(total / limit),
         "has_more": page < math.ceil(total / limit),
     }
+
+
+def get_cached_goods_by_file(file: bytes):
+    image_url = Parser.fetch_image_url_from_file(file)
+    return {"image_url": image_url}
