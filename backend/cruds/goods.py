@@ -14,9 +14,9 @@ from parser.main import Parser
 
 # load_dotenv()
 
-# redis_url = os.getenv("REDIS_URL")
-# redis_client = redis.Redis.from_url(redis_url)
-redis_client = redis.Redis()
+redis_url = os.getenv("REDIS_URL")
+redis_client = redis.Redis.from_url(redis_url)
+# redis_client = redis.Redis()
 
 
 def get_cached_goods_by_url(
