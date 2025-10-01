@@ -65,8 +65,5 @@ class Parser:
             return "Invalid response format"
 
 
-# with open("socks.jpg", "rb") as f:
-#     data = f.read()
-
 # socks = Parser().fetch_data_by_image(data)
 # print(socks)
