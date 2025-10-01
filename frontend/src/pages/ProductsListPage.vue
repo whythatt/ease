@@ -40,10 +40,10 @@ const fetchGoods = async () => {
             const formData = new FormData()
             formData.append('file', imageFile.value)
             console.log('делаю это опять')
-            response = await axios.post('http://localhost:10000/goods/', formData)
+            response = await axios.post('https://ease-vojh.onrender.com/goods/', formData)
             imageUrl.value = response.data.image_url
         }
-        response = await axios.get('http://localhost:10000/goods/', {
+        response = await axios.get('https://ease-vojh.onrender.com/goods/', {
             params: { image_url: imageUrl.value, page: page.value, limit }
         })
         const data = response.data
