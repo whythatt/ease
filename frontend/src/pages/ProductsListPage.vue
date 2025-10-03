@@ -1,6 +1,7 @@
 <script setup>
 import { ref, onMounted, onBeforeUnmount } from 'vue'
 import axios from 'axios'
+import debounce from 'lodash/debounce'
 import Search from '@/components/Search.vue'
 import ProductsList from '@/components/ProductsList.vue'
 
@@ -8,26 +9,22 @@ const goods = ref([])
 const page = ref(1)
 const limit = 30
 const loading = ref(false)
-const noMore = ref(false)
+const noMore = ref(true)
 const bottom = ref(null)
-const canLoadMore = ref(false)
 const imageUrl = ref('')
 const imageFile = ref('')
 
 const onSearch = (payload) => {
     if (typeof payload === 'string') {
-        // Поиск по URL
         imageUrl.value = payload
         imageFile.value = null
     } else {
-        // Поиск по файлу
         imageFile.value = payload
         imageUrl.value = ''
     }
     goods.value = []
     page.value = 1
     noMore.value = false
-    canLoadMore.value = true
     fetchGoods()
 }
 
@@ -39,14 +36,14 @@ const fetchGoods = async () => {
         if (imageFile.value && !imageUrl.value) {
             const formData = new FormData()
             formData.append('file', imageFile.value)
-            console.log('делаю это опять')
-            response = await axios.post('https://ease-vojh.onrender.com/goods/', formData)
+            response = await axios.post('http://0.0.0.0:10000/goods/', formData)
             imageUrl.value = response.data.image_url
         }
-        response = await axios.get('https://ease-vojh.onrender.com/goods/', {
-            params: { image_url: imageUrl.value, page: page.value, limit }
+        response = await axios.get('http://0.0.0.0:10000/goods/', {
+            params: { image_url: imageUrl.value, page: page.value, limit },
         })
         const data = response.data
+        console.log(data)
         if (data.products.length < limit) noMore.value = true
         goods.value.push(...data.products)
         page.value++
@@ -57,10 +54,12 @@ const fetchGoods = async () => {
     }
 }
 
+const debouncedFetchGoods = debounce(fetchGoods, 150)
+
 const observerCallback = (entries) => {
-    entries.forEach(entry => {
-        if (entry.isIntersecting && !loading.value && !noMore.value && canLoadMore.value) {
-            fetchGoods()
+    entries.forEach((entry) => {
+        if (entry.isIntersecting && !loading.value && !noMore.value) {
+            debouncedFetchGoods()
         }
     })
 }
@@ -70,12 +69,14 @@ let observer = null
 onMounted(() => {
     observer = new IntersectionObserver(observerCallback, {
         root: null,
-        threshold: 1.0
+        threshold: 0.1,
     })
     if (bottom.value) observer.observe(bottom.value)
+    // УБРАН вызов fetchGoods() из onMounted, загрузка только по поиску
 })
 
 onBeforeUnmount(() => {
+    debouncedFetchGoods.cancel()
     if (observer && bottom.value) observer.unobserve(bottom.value)
 })
 </script>
@@ -86,7 +87,7 @@ onBeforeUnmount(() => {
         <ProductsList :products="goods" />
     </div>
     <div v-if="loading" class="loading">Загрузка...</div>
-    <div ref="bottom" style="height: 1px;"></div>
+    <div ref="bottom" style="height: 1px;" id="for-scroll"></div>
 </template>
 
 <style>
@@ -96,6 +97,6 @@ onBeforeUnmount(() => {
 
 .loading {
     margin: 10px auto;
-    width: fit-content
+    width: fit-content;
 }
 </style>
