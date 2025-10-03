@@ -36,10 +36,10 @@ const fetchGoods = async () => {
         if (imageFile.value && !imageUrl.value) {
             const formData = new FormData()
             formData.append('file', imageFile.value)
-            response = await axios.post('http://0.0.0.0:10000/goods/', formData)
+            response = await axios.post('https://ease-d09bf.web.app/goods/', formData)
             imageUrl.value = response.data.image_url
         }
-        response = await axios.get('http://0.0.0.0:10000/goods/', {
+        response = await axios.get('https://ease-d09bf.web.app/goods/', {
             params: { image_url: imageUrl.value, page: page.value, limit },
         })
         const data = response.data

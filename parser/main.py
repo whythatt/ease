@@ -68,14 +68,14 @@ class AsyncParser:
                     return "Invalid response format"
 
 
-parser = AsyncParser.fetch_all_pages(
-    image_url="https://i.pinimg.com/1200x/57/a7/a2/57a7a2cf8a43484fec7e034c684e474a.jpg"
-)
+# parser = AsyncParser.fetch_all_pages(
+#     image_url="https://i.pinimg.com/1200x/57/a7/a2/57a7a2cf8a43484fec7e034c684e474a.jpg"
+# )
 
-start_time = time.perf_counter()
-data = asyncio.run(parser)
-end_time = time.perf_counter()
-print(len(data.get("products")))
-print(f"Время выполнения функции: {end_time - start_time:.4f} секунд")
+# start_time = time.perf_counter()
+# data = asyncio.run(parser)
+# end_time = time.perf_counter()
+# print(len(data.get("products")))
+# print(f"Время выполнения функции: {end_time - start_time:.4f} секунд")
 # with open('parser/result.json', 'w') as f:
 #     json.dump(data, f, ensure_ascii=False, indent=4)
