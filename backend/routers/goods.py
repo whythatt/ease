@@ -10,7 +10,7 @@ router = APIRouter(prefix="/goods", tags=["Goods APIs"])
 async def goods_by_url(
     image_url: str,
     page: int = Query(1, ge=1),
-    limit: int = Query(50, ge=1, le=100),
+    limit: int = Query(100, ge=1, le=100),
 ) -> GoodsResponseSchema:
     return await get_cached_goods_by_url(image_url, page, limit)
 

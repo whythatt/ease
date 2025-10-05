@@ -21,7 +21,7 @@ async def get_cached_goods_by_url(
     cached_goods = await redis_client.get(f"products:{encode_url}")
 
     if not cached_goods:
-        cached_goods = await AsyncParser.fetch_data_by_url(image_url)
+        cached_goods = await AsyncParser.fetch_all_pages(image_url)
         await redis_client.setex(
             f"products:{encode_url}", 300, json.dumps(cached_goods)
         )

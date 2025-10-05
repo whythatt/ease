@@ -22,7 +22,6 @@ body {
     background: white;
     font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto,
         "Helvetica Neue", Arial;
-    padding-top: env(safe-area-inset-top);
-    padding-bottom: env(safe-area-inset-bottom);
+    margin: 0;
 }
 </style>
