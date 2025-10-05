@@ -17,6 +17,7 @@ const props = defineProps({ products: { type: Array, default: () => [] } })
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: var(--gap);
+    padding-top: 90px;
 }
 
 @media (min-width: 427px) {
