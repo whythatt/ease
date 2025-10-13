@@ -15,9 +15,8 @@ app.add_middleware(
     allow_methods=["*"],  # Разрешить все методы (GET, POST, etc.)
     allow_headers=["*"],  # Разрешить все заголовки
 )
-
 app.include_router(goods.router)
 
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 10000))
-    uvicorn.run("backend.main:app", host="0.0.0.0", port=port)
+    uvicorn.run("backend.main:app", host="0.0.0.0", port=port, reload=True)

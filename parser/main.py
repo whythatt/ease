@@ -7,7 +7,7 @@ from parser.headers import url_headers, image_headers
 
 
 class AsyncParser:
-    semaphore = asyncio.Semaphore(10)  # Создаем семафор один раз
+    semaphore = asyncio.Semaphore(3)  # Создаем семафор один раз
 
     @staticmethod
     async def fetch_page(session, params, semaphore):
@@ -21,12 +21,13 @@ class AsyncParser:
                 return await response.json()
 
     @staticmethod
-    async def fetch_all_pages(image_url):
+    async def fetch_all_pages(image_url: str, page_index: int):
         params = {"url": image_url, "p": "0", "text": ""}
         goods = []
         async with aiohttp.ClientSession() as session:
             tasks = []
-            for page_number in range(15):
+            for page_number in range(1, page_index + 2)[page_index - 3 : -1]:
+            # for page_number in range(1, 11):
                 page_params = params.copy()
                 page_params["p"] = str(page_number)
                 tasks.append(
@@ -69,7 +70,8 @@ class AsyncParser:
 
 
 # parser = AsyncParser.fetch_all_pages(
-#     image_url="https://i.pinimg.com/1200x/57/a7/a2/57a7a2cf8a43484fec7e034c684e474a.jpg"
+#     image_url="https://i.pinimg.com/736x/56/c1/82/56c182400eb8735938bd684028b73678.jpg",
+#     page_index=6,
 # )
 
 # start_time = time.perf_counter()
@@ -77,5 +79,5 @@ class AsyncParser:
 # end_time = time.perf_counter()
 # print(len(data.get("products")))
 # print(f"Время выполнения функции: {end_time - start_time:.4f} секунд")
-# with open('parser/result.json', 'w') as f:
+# with open("parser/result.json", "w") as f:
 #     json.dump(data, f, ensure_ascii=False, indent=4)
