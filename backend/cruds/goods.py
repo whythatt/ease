@@ -7,11 +7,11 @@ from dotenv import load_dotenv
 from backend.schemas.goods import GoodsResponseSchema
 from parser.main import AsyncParser
 
-# load_dotenv()
+load_dotenv()
 
-# redis_url = os.getenv("REDIS_URL")
-# redis_client = redis.from_url(redis_url)
-redis_client = redis.Redis()
+redis_url = os.getenv("REDIS_URL")
+redis_client = redis.from_url(redis_url)
+# redis_client = redis.Redis()
 
 
 async def get_cached_goods_by_url(
