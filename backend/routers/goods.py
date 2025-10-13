@@ -9,10 +9,11 @@ router = APIRouter(prefix="/goods", tags=["Goods APIs"])
 @router.get("/", response_model=GoodsResponseSchema)
 async def goods_by_url(
     image_url: str,
+    page_index: int,
     page: int = Query(1, ge=1),
     limit: int = Query(100, ge=1, le=100),
 ) -> GoodsResponseSchema:
-    return await get_cached_goods_by_url(image_url, page, limit)
+    return await get_cached_goods_by_url(image_url, page_index, page, limit)
 
 
 @router.post("/")

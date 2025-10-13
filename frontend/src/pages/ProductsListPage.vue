@@ -5,6 +5,7 @@ import debounce from 'lodash/debounce'
 import Search from '@/components/Search.vue'
 import ProductsList from '@/components/ProductsList.vue'
 
+const pageIndex = ref(3)
 const goods = ref([])
 const page = ref(1)
 const limit = 100
@@ -29,8 +30,8 @@ const onSearch = (payload) => {
 }
 
 const fetchGoods = async () => {
-    const apiUrl = 'https://ease-vojh.onrender.com/goods/'
-    // const apiUrl = 'http://0.0.0.0:10000/goods/'
+    // const apiUrl = 'https://ease-vojh.onrender.com/goods/'
+    const apiUrl = 'http://0.0.0.0:10000/goods/'
     if (loading.value || noMore.value) return
     loading.value = true
     try {
@@ -42,13 +43,13 @@ const fetchGoods = async () => {
             imageUrl.value = response.data.image_url
         }
         response = await axios.get(apiUrl, {
-            params: { image_url: imageUrl.value, page: page.value, limit },
+            params: { image_url: imageUrl.value, page_index: pageIndex.value, page: page.value, limit },
         })
         const data = response.data
         console.log(data)
         if (data.products.length < limit) noMore.value = true
         goods.value.push(...data.products)
-        page.value++
+        // page.value++
     } catch (e) {
         console.error(e)
     } finally {

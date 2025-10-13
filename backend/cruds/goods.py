@@ -7,21 +7,21 @@ from dotenv import load_dotenv
 from backend.schemas.goods import GoodsResponseSchema
 from parser.main import AsyncParser
 
-load_dotenv()
+# load_dotenv()
 
-redis_url = os.getenv("REDIS_URL")
-redis_client = redis.from_url(redis_url)
-# redis_client = redis.Redis()
+# redis_url = os.getenv("REDIS_URL")
+# redis_client = redis.from_url(redis_url)
+redis_client = redis.Redis()
 
 
 async def get_cached_goods_by_url(
-    image_url: str, page: int, limit: int
+    image_url: str, page_index: int, page: int, limit: int
 ) -> GoodsResponseSchema:
     encode_url = hashlib.md5(image_url.encode()).hexdigest()[:12]
     cached_goods = await redis_client.get(f"products:{encode_url}")
 
     if not cached_goods:
-        cached_goods = await AsyncParser.fetch_all_pages(image_url)
+        cached_goods = await AsyncParser.fetch_all_pages(image_url, page_index)
         await redis_client.setex(
             f"products:{encode_url}", 300, json.dumps(cached_goods)
         )
