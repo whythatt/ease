@@ -15,32 +15,28 @@ redis_client = redis.Redis()
 
 
 async def get_cached_goods_by_url(
-    image_url: str, page_index: int, page: int, limit: int
+    image_url: str, page_index: int
 ) -> GoodsResponseSchema:
     encode_url = hashlib.md5(image_url.encode()).hexdigest()[:12]
-    cached_goods = await redis_client.get(f"products:{encode_url}")
+    cached_goods = await redis_client.lrange(
+        f"products:{encode_url}", page_index // 3 - 1, page_index // 3 - 1
+    )
 
-    if not cached_goods:
+    if cached_goods == []:
         cached_goods = await AsyncParser.fetch_all_pages(image_url, page_index)
-        await redis_client.setex(
-            f"products:{encode_url}", 300, json.dumps(cached_goods)
-        )
-        goods_list = cached_goods["products"]
+        await redis_client.rpush(f"products:{encode_url}", json.dumps(cached_goods))
+        await redis_client.expire(f"products:{encode_url}", 600)
+        cached_goods = cached_goods["products"]
     else:
-        goods_list = json.loads(cached_goods)["products"]
+        cached_goods = json.loads(cached_goods[0])["products"]
 
-    total = len(goods_list)
-    start = (page - 1) * limit
-    end = start + limit
-    current_page_goods = goods_list[start:end]
+    total = len(cached_goods)
+    page = page_index // 3
 
     return {
-        "products": current_page_goods,
+        "products": cached_goods,
         "page": page,
-        "limit": limit,
         "total": total,
-        "pages": math.ceil(total / limit),
-        "has_more": page < math.ceil(total / limit),
     }
 
 

@@ -7,10 +7,7 @@ import ProductsList from '@/components/ProductsList.vue'
 
 const pageIndex = ref(3)
 const goods = ref([])
-const page = ref(1)
-const limit = 100
 const loading = ref(false)
-const noMore = ref(true)
 const bottom = ref(null)
 const imageUrl = ref('')
 const imageFile = ref('')
@@ -24,15 +21,13 @@ const onSearch = (payload) => {
         imageUrl.value = ''
     }
     goods.value = []
-    page.value = 1
-    noMore.value = false
     fetchGoods()
 }
 
 const fetchGoods = async () => {
     // const apiUrl = 'https://ease-vojh.onrender.com/goods/'
     const apiUrl = 'http://0.0.0.0:10000/goods/'
-    if (loading.value || noMore.value) return
+    if (loading.value) return
     loading.value = true
     try {
         let response
@@ -43,13 +38,12 @@ const fetchGoods = async () => {
             imageUrl.value = response.data.image_url
         }
         response = await axios.get(apiUrl, {
-            params: { image_url: imageUrl.value, page_index: pageIndex.value, page: page.value, limit },
+            params: { image_url: imageUrl.value, page_index: pageIndex.value },
         })
         const data = response.data
         console.log(data)
-        if (data.products.length < limit) noMore.value = true
         goods.value.push(...data.products)
-        // page.value++
+        pageIndex.value += 3
     } catch (e) {
         console.error(e)
     } finally {
@@ -57,11 +51,11 @@ const fetchGoods = async () => {
     }
 }
 
-const debouncedFetchGoods = debounce(fetchGoods, 150)
+const debouncedFetchGoods = debounce(fetchGoods, 350)
 
 const observerCallback = (entries) => {
     entries.forEach((entry) => {
-        if (entry.isIntersecting && !loading.value && !noMore.value) {
+        if (entry.isIntersecting && !loading.value) {
             debouncedFetchGoods()
         }
     })
