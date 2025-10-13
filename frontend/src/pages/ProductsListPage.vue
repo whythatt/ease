@@ -34,22 +34,11 @@ const fetchGoods = async () => {
         if (imageFile.value && !imageUrl.value) {
             const formData = new FormData()
             formData.append('file', imageFile.value)
-<<<<<<< HEAD
-            response = await axios.post('https://ease-vojh.onrender.com/goods/', formData)
-            imageUrl.value = response.data.image_url
-        }
-        response = await axios.get('https://ease-vojh.onrender.com/goods/', {
-=======
             response = await axios.post(apiUrl, formData)
             imageUrl.value = response.data.image_url
         }
         response = await axios.get(apiUrl, {
-<<<<<<< HEAD
->>>>>>> feature/async-parser
-            params: { image_url: imageUrl.value, page: page.value, limit },
-=======
             params: { image_url: imageUrl.value, page_index: pageIndex.value },
->>>>>>> feature/async-parser
         })
         const data = response.data
         console.log(data)
