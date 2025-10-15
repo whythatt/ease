@@ -86,7 +86,9 @@ onBeforeUnmount(() => {
     <div class="frame">
         <ProductsList :products="goods" />
     </div>
-    <div v-if="loading" class="loading">Загрузка...</div>
+    <div class="circles-loader-con">
+        <div v-if="loading" class="circles-loader"></div>
+    </div>
     <div v-if="goods.length === 0 && !loading" class="warning-msg">
         <svg xmlns="http://www.w3.org/2000/svg" width="44" height="44" viewBox="0 0 64 64">
             <title>Owl SVG Icon</title>
@@ -101,13 +103,18 @@ onBeforeUnmount(() => {
 </template>
 
 <style>
+@import '/dist/assets/loading-animation.css';
+
 .frame {
     margin: 0;
 }
 
-.loading {
+.circles-loader-con {
+    /* display: flex;
+    align-items: center; */
     margin: 20px auto;
     width: fit-content;
+    padding: 10px;
 }
 
 .warning-msg {
