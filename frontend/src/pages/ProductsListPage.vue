@@ -5,6 +5,7 @@ import debounce from 'lodash/debounce'
 import Search from '@/components/Search.vue'
 import ProductsList from '@/components/ProductsList.vue'
 
+const isSearchActive = ref(false)
 const pageIndex = ref(3)
 const goods = ref([])
 const loading = ref(false)
@@ -13,6 +14,7 @@ const imageUrl = ref('')
 const imageFile = ref('')
 
 const onSearch = (payload) => {
+    isSearchActive.value = true
     if (typeof payload === 'string') {
         imageUrl.value = payload
         imageFile.value = null
@@ -51,9 +53,10 @@ const fetchGoods = async () => {
     }
 }
 
-const debouncedFetchGoods = debounce(fetchGoods, 350)
+const debouncedFetchGoods = debounce(fetchGoods, 150)
 
 const observerCallback = (entries) => {
+    if (!isSearchActive.value) return
     entries.forEach((entry) => {
         if (entry.isIntersecting && !loading.value) {
             debouncedFetchGoods()
@@ -66,7 +69,7 @@ let observer = null
 onMounted(() => {
     observer = new IntersectionObserver(observerCallback, {
         root: null,
-        rootMargin: '0px 0px 500px 0px',
+        rootMargin: '0px 0px 700px 0px',
         threshold: 0.1,
     })
     if (bottom.value) observer.observe(bottom.value)
