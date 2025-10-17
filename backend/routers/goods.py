@@ -1,20 +1,17 @@
-from fastapi import APIRouter, Query, File, UploadFile
+from fastapi import APIRouter, Form, Query, File, UploadFile
 
 from backend.schemas.goods import GoodsResponseSchema
-from backend.cruds.goods import get_cached_goods_by_url, get_cached_goods_by_file
+from backend.crud.goods import get_goods_by_url, get_goods_by_file
 
 router = APIRouter(prefix="/goods", tags=["Goods APIs"])
 
 
 @router.get("/", response_model=GoodsResponseSchema)
-async def goods_by_url(
-    image_url: str,
-    page_index: int,
-) -> GoodsResponseSchema:
-    return await get_cached_goods_by_url(image_url, page_index)
+async def goods_by_url(page_index: int, image_url: str) -> GoodsResponseSchema:
+    return await get_goods_by_url(page_index, image_url)
 
 
 @router.post("/")
-async def get_image_url(file: UploadFile = File(...)):
+async def goods_by_file(page_index: int = Form(...), file: UploadFile = File(...)):
     binary_image = await file.read()
-    return await get_cached_goods_by_file(binary_image)
+    return await get_goods_by_file(page_index, binary_image)

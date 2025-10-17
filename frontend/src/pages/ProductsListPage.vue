@@ -32,16 +32,18 @@ const fetchGoods = async () => {
     if (loading.value) return
     loading.value = true
     try {
-        let response
+        let response;
         if (imageFile.value && !imageUrl.value) {
-            const formData = new FormData()
-            formData.append('file', imageFile.value)
-            response = await axios.post(apiUrl, formData)
-            imageUrl.value = response.data.image_url
+            const formData = new FormData();
+            formData.append('file', imageFile.value);
+            formData.append('page_index', pageIndex.value);
+
+            response = await axios.post(apiUrl, formData);
+        } else {
+            response = await axios.get(apiUrl, {
+                params: { image_url: imageUrl.value, page_index: pageIndex.value },
+            });
         }
-        response = await axios.get(apiUrl, {
-            params: { image_url: imageUrl.value, page_index: pageIndex.value },
-        })
         const data = response.data
         console.log(data)
         goods.value.push(...data.products)
@@ -69,7 +71,7 @@ let observer = null
 onMounted(() => {
     observer = new IntersectionObserver(observerCallback, {
         root: null,
-        rootMargin: '0px 0px 700px 0px',
+        rootMargin: '0px 0px 2400px 0px',
         threshold: 0.1,
     })
     if (bottom.value) observer.observe(bottom.value)
