@@ -103,7 +103,7 @@ onBeforeUnmount(() => {
 </template>
 
 <style>
-@import '../../dist/loading-animation.css';
+@import '../assets/styles/loading-animation.css';
 
 .frame {
     margin: 0;
