@@ -103,15 +103,13 @@ onBeforeUnmount(() => {
 </template>
 
 <style>
-@import '/dist/assets/loading-animation.css';
+@import '../../dist/loading-animation.css';
 
 .frame {
     margin: 0;
 }
 
 .circles-loader-con {
-    /* display: flex;
-    align-items: center; */
     margin: 20px auto;
     width: fit-content;
     padding: 10px;
