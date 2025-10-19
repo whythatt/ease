@@ -27,7 +27,7 @@ class AsyncParser:
         async with aiohttp.ClientSession() as session:
             tasks = []
             for page_number in range(1, page_index + 2)[page_index - 3 : -1]:
-            # for page_number in range(1, 11):
+                # for page_number in range(1, 11):
                 page_params = params.copy()
                 page_params["p"] = str(page_number)
                 tasks.append(

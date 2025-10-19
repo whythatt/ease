@@ -4,11 +4,11 @@ import os
 import redis.asyncio as redis
 from dotenv import load_dotenv
 
-load_dotenv()
+# load_dotenv()
 
-redis_url = os.getenv("REDIS_URL")
-redis_client = redis.from_url(redis_url)
-# redis_client = redis.Redis()
+# redis_url = os.getenv("REDIS_URL")
+# redis_client = redis.from_url(redis_url)
+redis_client = redis.Redis()
 
 
 async def get_goods_cache(key, start, end):

@@ -27,8 +27,8 @@ const onSearch = (payload) => {
 }
 
 const fetchGoods = async () => {
-    const apiUrl = 'https://ease-vojh.onrender.com/goods/'
-    // const apiUrl = 'http://0.0.0.0:10000/goods/'
+    // const apiUrl = 'https://ease-vojh.onrender.com/goods/'
+    const apiUrl = 'http://0.0.0.0:10000/goods/'
     if (loading.value) return
     loading.value = true
     try {
