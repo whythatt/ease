@@ -104,7 +104,7 @@ onBeforeUnmount(() => {
     <div ref="bottom" style="height: 1px;" id="for-scroll"></div>
 </template>
 
-<style>
+<style scoped>
 @import '../assets/styles/loading-animation.css';
 
 .frame {

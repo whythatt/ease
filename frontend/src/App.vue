@@ -6,12 +6,6 @@
 </template>
 
 <style>
-:root {
-    --bg: #eef1f3;
-    --card-radius: 18px;
-    --gap: 5px;
-}
-
 * {
     box-sizing: border-box;
 }
