@@ -13,6 +13,10 @@ const props = defineProps({ products: { type: Array, default: () => [] } })
 </template>
 
 <style>
+:root {
+    --gap: 5px;
+}
+
 .grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);

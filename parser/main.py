@@ -7,7 +7,7 @@ from parser.headers import url_headers, image_headers
 
 
 class AsyncParser:
-    semaphore = asyncio.Semaphore(3)  # Создаем семафор один раз
+    semaphore = asyncio.Semaphore(10)  # Создаем семафор один раз
 
     @staticmethod
     async def fetch_page(session, params, semaphore):
@@ -27,7 +27,7 @@ class AsyncParser:
         async with aiohttp.ClientSession() as session:
             tasks = []
             for page_number in range(1, page_index + 2)[page_index - 3 : -1]:
-                # for page_number in range(1, 11):
+                # for page_number in range(1, 110):
                 page_params = params.copy()
                 page_params["p"] = str(page_number)
                 tasks.append(
