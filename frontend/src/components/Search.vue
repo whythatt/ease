@@ -12,7 +12,7 @@ const toggleFilters = () => {
     showFilters.value = !showFilters.value
 }
 
-const showInput = ref(true)
+const showInput = ref(false)
 const toggleInput = () => {
     showInput.value = !showInput.value
 }

@@ -12,6 +12,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@formkit/auto-animate": "^0.9.0",
     "axios": "^1.12.2",
     "firebase-tools": "^14.20.0",
     "lodash": "^4.17.21",

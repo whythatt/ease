@@ -68,6 +68,7 @@ const openShopUrl = (shop_url) => {
     font-weight: 600;
     font-size: 11px;
     margin: 0;
+    padding: 0;
 }
 
 .source {

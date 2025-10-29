@@ -35,9 +35,12 @@ async def get_goods_by_file(page_index: int, file: bytes):
     redis_key = f"products:{hashlib.sha256(file).hexdigest()[:12]}"
     start, end = page_index // 3 - 1, page_index // 3 - 1
     goods_data = await get_goods_cache(redis_key, start, end)
+    print(len(goods_data))
     if goods_data == []:
         image_url = await AsyncParser.fetch_image_url_from_file(file)
         return await give_goods(redis_key, image_url, page_index)
+    else:
+        goods_data = json.loads(goods_data[0]).get("products", [])
 
     total = len(goods_data)
     page = page_index // 3
